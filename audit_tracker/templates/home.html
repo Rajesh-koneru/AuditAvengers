@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audit Avengers | Unmasking Financial Excellence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='2.png') }}">
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+    }
+    .font-heading {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(234, 179, 8, 0.2);
+    }
+    .glass-card:hover {
+      border-color: rgba(234, 179, 8, 0.6);
+      box-shadow: 0 10px 30px -10px rgba(234, 179, 8, 0.25);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(34, 197, 94, 0.8); }
+    }
+    .whatsapp-glow {
+      animation: pulseGlow 2.5s infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col selection:bg-yellow-500 selection:text-black">
+
+  <!-- Header & Navigation -->
+  <header class="bg-gray-950/90 backdrop-blur-md border-b border-yellow-500/30 sticky top-0 z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="{{ url_for('static', filename='2.png') }}" alt="Audit Avengers Logo" class="h-11 w-11 rounded-full border-2 border-yellow-500 group-hover:scale-105 transition-transform duration-300">
+        <span class="font-heading font-extrabold text-2xl tracking-tight text-white group-hover:text-yellow-400 transition-colors">
+          Audit <span class="text-yellow-500">Avengers</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-6 font-semibold text-sm">
+        <a href="#about" class="hover:text-yellow-400 transition-colors">About</a>
+        <a href="#services" class="hover:text-yellow-400 transition-colors">Services</a>
+        <a href="#audits" class="hover:text-yellow-400 transition-colors">Open Audits</a>
+        <a href="#contact" class="hover:text-yellow-400 transition-colors">Contact</a>
+        <a href="/audit_card" class="text-yellow-400 hover:underline flex items-center gap-1">
+          <i class="fas fa-list-check text-xs"></i> All Opportunities
+        </a>
+        <a href="/login_page" class="text-gray-200 hover:text-yellow-400 font-bold px-3 py-2 transition-colors">
+          Sign In
+        </a>
+        <a href="/signup_page" id="get" class="bg-yellow-500 hover:bg-yellow-400 text-black px-5 py-2.5 rounded-lg font-bold shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 transition-all duration-200">
+          Sign Up
+        </a>
+      </nav>
+
+      <!-- Hamburger button -->
+      <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-yellow-400 text-2xl focus:outline-none p-2">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Nav -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-yellow-500/30 px-6 py-4 space-y-3">
+      <a href="#about" class="block text-gray-200 hover:text-yellow-400 font-medium py-1">About</a>
+      <a href="#services" class="block text-gray-200 hover:text-yellow-400 font-medium py-1">Services</a>
+      <a href="#audits" class="block text-gray-200 hover:text-yellow-400 font-medium py-1">Open Audits</a>
+      <a href="#contact" class="block text-gray-200 hover:text-yellow-400 font-medium py-1">Contact</a>
+      <a href="/audit_card" class="block text-yellow-400 font-semibold py-1">All Opportunities</a>
+      <a href="/login_page" class="block text-gray-200 hover:text-yellow-400 font-bold py-1">Sign In</a>
+      <a href="/signup_page" class="block bg-yellow-500 text-black text-center font-bold py-2 rounded-lg mt-2">Sign Up</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative py-20 lg:py-28 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 mb-6">
+        <i class="fas fa-shield-halved"></i> Premier Financial Auditing Firm
+      </span>
+      <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+        Unmasking Financial Excellence & Integrity
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
+        Audit Avengers connects certified auditors with high-impact corporate, inventory, and compliance audit opportunities across India.
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href="/audit_card" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-3.5 rounded-xl shadow-xl shadow-yellow-500/25 hover:shadow-yellow-500/40 transition-all flex items-center gap-2">
+          <span>Explore Open Audits</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#about" class="bg-gray-900 hover:bg-gray-800 text-gray-200 font-semibold px-8 py-3.5 rounded-xl border border-gray-800 hover:border-gray-700 transition-all">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Open Audits Section -->
+  <section id="audits" class="py-16 bg-gray-950 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
+        <div>
+          <span class="text-yellow-500 font-bold text-sm tracking-wider uppercase">Active Requirements</span>
+          <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white mt-1">Featured Open Audits</h2>
+        </div>
+        <a href="/audit_card" class="mt-4 md:mt-0 text-yellow-400 hover:text-yellow-300 font-semibold text-sm flex items-center gap-1">
+          View All Opportunities <i class="fas fa-chevron-right text-xs"></i>
+        </a>
+      </div>
+
+      <div id="card" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered dynamically by home.js -->
+        <div class="col-span-full text-center py-8 text-gray-500">Loading open audit opportunities...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-900/50 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">About Audit Avengers</h2>
+        <p class="mt-4 text-gray-300 leading-relaxed">
+          Audit Avengers is a premier auditing firm dedicated to top-notch financial, compliance, and operational audit services. Our team of qualified auditors ensures transparency, precision, and compliance across diverse industries.
+        </p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="font-heading text-4xl font-extrabold text-yellow-400">5+</div>
+          <div class="text-sm font-semibold text-gray-400 mt-1">Years Experience</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="font-heading text-4xl font-extrabold text-yellow-400">500+</div>
+          <div class="text-sm font-semibold text-gray-400 mt-1">Audits Executed</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="font-heading text-4xl font-extrabold text-yellow-400">50+</div>
+          <div class="text-sm font-semibold text-gray-400 mt-1">Certified Auditors</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center">
+          <div class="font-heading text-4xl font-extrabold text-yellow-400">98%</div>
+          <div class="text-sm font-semibold text-gray-400 mt-1">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-gray-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">Our Auditing Services</h2>
+        <p class="mt-3 text-gray-400">Tailored auditing and financial verification solutions for enterprises.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-file-invoice-dollar"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Financial Audits</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Comprehensive review of financial statements to guarantee accuracy, regulatory compliance, and transparency.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-magnifying-glass-chart"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Internal Controls</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Evaluating operational processes and internal risk controls to optimize efficiency and mitigate fraud risks.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-scale-balanced"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Tax Compliance</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Expert review of statutory filings to ensure complete compliance and optimize legal tax structures.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Risk Management</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Identifying and insulating critical financial vulnerabilities to protect enterprise longevity.</p>
+        </div>
+
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-boxes-stacked"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-white mb-2">Stock & Asset Audits</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">On-site inventory counts, asset verification, and physical warehouse valuation audits across nationwide locations.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-yellow-500 to-amber-600 p-6 rounded-2xl text-gray-950 flex flex-col justify-between">
+          <div>
+            <h3 class="font-heading font-extrabold text-2xl mb-2">Need a Custom Audit Solution?</h3>
+            <p class="text-gray-900 font-medium text-sm">Contact our audit directors today to configure a custom team deployment for your business.</p>
+          </div>
+          <a href="#contact" class="mt-6 inline-block bg-gray-950 text-yellow-400 text-center font-bold px-6 py-3 rounded-xl hover:bg-black transition-colors">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Bio -->
+  <section class="py-16 bg-gray-900/30 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-card rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8">
+        <img src="{{ url_for('static', filename='2.png') }}" alt="Nikhil Mailapuram - Founder" class="w-36 h-36 md:w-44 md:h-44 rounded-full border-4 border-yellow-500 shadow-2xl object-cover">
+        <div class="text-center md:text-left">
+          <span class="text-yellow-500 font-bold text-xs uppercase tracking-wider">Leadership</span>
+          <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-white mt-1">Nikhil Mailapuram</h2>
+          <p class="text-gray-400 text-xs font-semibold mb-3">Founder & Chief Managing Auditor</p>
+          <p class="text-gray-300 text-sm leading-relaxed max-w-2xl">
+            With years of specialized experience in auditing and corporate finance, Nikhil founded Audit Avengers to bridge the gap between enterprises requiring rigorous audit compliance and certified auditors looking for high-value assignments.
+          </p>
+          <div class="flex justify-center md:justify-start gap-4 mt-6 text-xl text-yellow-400">
+            <a href="https://chat.whatsapp.com/H7N9dgDI5inFTjMVwf0G43" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://x.com/NikhilMailapuam?t=6L6yAKRF4JTVs8Gmbuxhiw&s=09" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-x-twitter"></i></a>
+            <a href="http://www.linkedin.com/in/mailapuram-nikhil-b4b92424b" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/nikhil_mailapuram" target="_blank" class="hover:text-yellow-300 transition-colors"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact" class="py-20 bg-gray-950 border-t border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-white">Contact Us</h2>
+        <p class="mt-2 text-gray-400">Have questions or want to discuss an audit assignment? Send us a message.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Form -->
+        <div class="glass-card p-8 rounded-2xl">
+          <form class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Full Name</label>
+              <input type="text" id="name" placeholder="John Doe" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Email Address</label>
+              <input type="email" id="mail" placeholder="john@example.com" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 transition-colors">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Message</label>
+              <textarea id="msg" rows="4" placeholder="Your inquiry or requirement details..." class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 transition-colors"></textarea>
+            </div>
+            <button type="button" id="mailBtn" class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3.5 rounded-lg shadow-lg shadow-yellow-500/20 transition-all flex items-center justify-center gap-2">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Info -->
+        <div class="glass-card p-8 rounded-2xl flex flex-col justify-between space-y-6">
+          <div class="space-y-6">
+            <h3 class="font-heading font-bold text-2xl text-white">Contact Information</h3>
+            <div class="space-y-4 text-gray-300 text-sm">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center shrink-0">
+                  <i class="fas fa-location-dot"></i>
+                </div>
+                <span>Miyapur, Hyderabad, Telangana, India</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center shrink-0">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <span>+91 9121313106</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center shrink-0">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <span>infoauditavengers@gmail.com</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center shrink-0">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <span>Monday – Friday: 9:00 AM – 6:00 PM IST</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-950 p-6 rounded-xl border border-gray-800">
+            <h4 class="font-heading font-bold text-lg text-white mb-1">Ready for Audit Operations?</h4>
+            <p class="text-gray-400 text-xs mb-4">Join our network of elite auditors or register your enterprise requirement today.</p>
+            <a href="/signup_page" class="inline-block bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-5 py-2.5 rounded-lg text-xs transition-colors">
+              Access Portal
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Floating WhatsApp -->
+  <a href="https://chat.whatsapp.com/H7N9dgDI5inFTjMVwf0G43" target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-3 rounded-full shadow-2xl flex items-center gap-2 transition-all duration-300 whatsapp-glow">
+    <i class="fab fa-whatsapp text-2xl"></i>
+    <span class="text-sm font-semibold hidden sm:inline">Connect on WhatsApp</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="bg-gray-950 border-t border-yellow-500/30 py-8 text-xs text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <img src="{{ url_for('static', filename='2.png') }}" class="h-8 w-8 rounded-full border border-yellow-500" alt="Logo">
+        <span>© 2026 Audit Avengers. All rights reserved.</span>
+      </div>
+      <div class="flex gap-6 text-gray-400">
+        <a href="#about" class="hover:text-yellow-400">About</a>
+        <a href="#services" class="hover:text-yellow-400">Services</a>
+        <a href="/audit_card" class="hover:text-yellow-400">Opportunities</a>
+        <a href="/signup_page" class="hover:text-yellow-400">Login</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+  </script>
+  <script src="{{ url_for('static', filename='js/mail.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>

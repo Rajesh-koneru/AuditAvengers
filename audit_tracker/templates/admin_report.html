@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Master Audit Report | Audit Avengers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='2.png') }}">
+    <style>
+        body { font-family: 'Outfit', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col selection:bg-yellow-500 selection:text-black">
+
+    <!-- Header -->
+    <header class="bg-gray-900 border-b border-yellow-500/30 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <a href="/" class="flex items-center gap-3">
+                <img src="{{ url_for('static', filename='2.png') }}" alt="Audit Avengers Logo" class="h-10 w-10 rounded-full border-2 border-yellow-500">
+                <span class="font-bold text-xl text-white">Audit Avengers <span class="text-yellow-500 text-xs px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-500/30 ml-1">REPORTS</span></span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+                <a href="/" class="text-gray-300 hover:text-yellow-400">Home</a>
+                <a href="/admin/dashboard" class="text-gray-300 hover:text-yellow-400">Dashboard</a>
+                <a href="/application" class="text-gray-300 hover:text-yellow-400">Applications</a>
+                <button onclick="openModal()" class="text-yellow-400 hover:text-yellow-300 flex items-center gap-1.5"><i class="fas fa-download"></i> Export Excel</button>
+                <button onclick="confirmDelete(event)" class="text-red-400 hover:text-red-300 flex items-center gap-1.5"><i class="fas fa-trash-can"></i> Truncate Data</button>
+            </nav>
+
+            <button onclick="toggleMenu()" class="md:hidden text-gray-300 text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-gray-800 px-6 py-4 space-y-3">
+            <a href="/" class="block text-gray-200">Home</a>
+            <a href="/admin/dashboard" class="block text-gray-200">Dashboard</a>
+            <a href="/application" class="block text-gray-200">Applications</a>
+            <button onclick="openModal()" class="block text-yellow-400 font-semibold">Export Excel</button>
+            <button onclick="confirmDelete(event)" class="block text-red-400 font-semibold">Truncate Data</button>
+        </div>
+    </header>
+
+    <!-- Modal for Download Filename -->
+    <div id="nameModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 hidden">
+        <div class="bg-gray-900 border border-yellow-500/40 p-6 rounded-2xl shadow-2xl w-full max-w-sm">
+            <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-file-excel text-green-500 mr-2"></i>Export Audit Report</h2>
+            <p class="text-xs text-gray-400 mb-4">Enter a custom filename for your Excel download:</p>
+            <input id="fileName" type="text" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-yellow-500 mb-4" placeholder="e.g. audit_report_2026">
+            <div class="flex justify-end gap-3">
+                <button onclick="closeModal()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-xl text-xs font-semibold">Cancel</button>
+                <button id="download" onclick="timeDelay()" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-4 py-2 rounded-xl text-xs">Download File</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Master Audit Report</h1>
+                <p class="text-gray-400 text-sm mt-1">Search, filter, edit, and export comprehensive audit logs</p>
+            </div>
+
+            <!-- Action Controls & Real-time Instant Search -->
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Search Input Bar (Feature) -->
+                <div class="relative min-w-[220px]">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 text-xs"><i class="fas fa-search"></i></span>
+                    <input type="text" id="search_input" placeholder="Instant Search Audit / Auditor..." class="w-full bg-gray-900 border border-gray-700 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500">
+                </div>
+
+                <!-- Category Filter Dropdown -->
+                <select id="filter" class="bg-gray-900 border border-gray-700 text-gray-200 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-yellow-500">
+                    <option value="Completed">Status: Completed</option>
+                    <option value="Pending">Status: Pending</option>
+                    <option value="In Progress">Status: In Progress</option>
+                    <option value="Paid">Payment: Paid</option>
+                    <option value="Unpaid">Payment: Unpaid</option>
+                    <option value="Requested">Payment: Requested</option>
+                </select>
+
+                <button id="filterBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+
+                <button id="editBtn" class="bg-yellow-500 hover:bg-yellow-400 text-black px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                    <i class="fas fa-pen-to-square"></i> Edit Status
+                </button>
+
+                <a id="newAuditBtn" href="/admin/manual_data" class="bg-green-600 hover:bg-green-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                    <i class="fas fa-plus"></i> New Audit
+                </a>
+            </div>
+        </div>
+
+        <!-- Master Data Table -->
+        <div class="bg-gray-900 border border-gray-800 rounded-2xl shadow-xl overflow-hidden mb-10">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-950 border-b border-gray-800 text-xs uppercase font-semibold text-gray-400">
+                            <th class="py-3.5 px-4 text-center">Audit ID</th>
+                            <th class="py-3.5 px-4 text-center">Auditor ID</th>
+                            <th class="py-3.5 px-4 text-center">Auditor Name</th>
+                            <th class="py-3.5 px-4 text-center">Audit Type</th>
+                            <th class="py-3.5 px-4 text-center">Planned Date</th>
+                            <th class="py-3.5 px-4 text-center">Contact</th>
+                            <th class="py-3.5 px-4 text-center">Email</th>
+                            <th class="py-3.5 px-4 text-center">Client ID</th>
+                            <th class="py-3.5 px-4 text-center">State</th>
+                            <th class="py-3.5 px-4 text-center">Location</th>
+                            <th class="py-3.5 px-4 text-center">Amount</th>
+                            <th class="py-3.5 px-4 text-center">Payment Status</th>
+                            <th class="py-3.5 px-4 text-center">Audit Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_body divide-y divide-gray-800 text-xs">
+                        <!-- Populated dynamically by adminReport.js -->
+                        <tr><td colspan="13" class="text-center py-8 text-gray-500">Loading audit records...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Excel Upload Card -->
+        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-xl max-w-xl mx-auto">
+            <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i class="fas fa-file-excel text-green-500"></i> Bulk Excel Import</h2>
+            <p class="text-xs text-gray-400 mb-4">Upload an Excel sheet (.xlsx, .xls) containing structured audit assignment rows.</p>
+
+            <form id="form1" class="space-y-4">
+                <input type="file" id="fileInput" accept=".xlsx, .xls" class="block w-full text-xs text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-yellow-500/10 file:text-yellow-400 hover:file:bg-yellow-500/20 bg-gray-950 border border-gray-800 rounded-xl p-2 cursor-pointer"/>
+                <button type="submit" id="uploadButton" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-cloud-arrow-up"></i> Process & Import File
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-950 border-t border-yellow-500/30 py-6 text-xs text-gray-400 text-center">
+        <p>&copy; 2026 Audit Avengers. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("mobile-menu");
+            if (menu) menu.classList.toggle("hidden");
+        }
+        function openModal() {
+            const modal = document.getElementById("nameModal");
+            if (modal) modal.classList.remove("hidden");
+        }
+        function closeModal() {
+            const modal = document.getElementById("nameModal");
+            if (modal) modal.classList.add("hidden");
+        }
+        function timeDelay() {
+            setTimeout(() => { closeModal(); }, 800);
+        }
+        async function confirmDelete(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to truncate the audit report database? This action cannot be undone.")) {
+                try {
+                    let res = await fetch("/admin/delete_data", { method: "DELETE" });
+                    let data = await res.json();
+                    alert(data.message || "Data cleared successfully");
+                    location.reload();
+                } catch (e) {
+                    alert("Error clearing database.");
+                }
+            }
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/adminReport.js') }}"></script>
+</body>
+</html>
